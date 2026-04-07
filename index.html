@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>Shadow CIA | تقديم</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  margin: 0;
+  font-family: "Tahoma", sans-serif;
+  background: #f0f0f0; /* خلفية فاتحة */
+  color: #000;
+}
+
+/* شاشة التحميل */
+#loader {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 9999;
+  color: #fff;
+}
+
+#loader img {
+  max-width: 200px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+}
+
+.progress {
+  font-size: 30px;
+}
+
+.bar {
+  width: 80%;
+  max-width: 300px;
+  height: 10px;
+  background: #444;
+  margin-top: 15px;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  width: 0%;
+  background: #fff;
+}
+
+/* الموقع */
+.container {
+  display: none;
+  padding: 20px;
+  max-width: 900px;
+  margin: auto;
+  background: #f0f0f0;
+  color: #000;
+}
+
+h1 {
+  text-align: center;
+  color: #000;
+  margin-bottom: 20px;
+}
+
+form {
+  margin-top: 20px;
+}
+
+label {
+  display: block;
+  margin-top: 15px;
+  color: #000;
+  font-weight: bold;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 8px;
+  border: 1px solid #aaa;
+  outline: none;
+  background: #fff;
+  color: #000;
+  box-sizing: border-box;
+}
+
+button {
+  margin-top: 20px;
+  padding: 12px;
+  width: 100%;
+  background: #000;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #333;
+}
+
+#main img {
+  display: block;
+  margin: 0 auto 20px auto;
+  max-width: 250px;
+  border-radius: 15px;
+}
+
+/* تجاوب الجوال */
+@media (max-width: 600px) {
+  body {
+    font-size: 14px;
+  }
+  #loader img, #main img {
+    max-width: 150px;
+  }
+  .bar {
+    width: 90%;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- شاشة التحميل -->
+<div id="loader">
+  <img src="https://media.discordapp.net/attachments/1456296617262059631/1491099732691517591/IMG_8882.jpg?ex=69d67657&is=69d524d7&hm=1b65d306b83e4038093d0d1f0cf3d05584ea9327124b90abd083e9b45332924e&=&format=webp&width=811&height=921" alt="Shadow CIA">
+  <div class="progress" id="percent">0%</div>
+  <div class="bar">
+    <div class="fill" id="fill"></div>
+  </div>
+</div>
+
+<!-- الموقع -->
+<div class="container" id="main">
+  <img src="https://media.discordapp.net/attachments/1456296617262059631/1491099732691517591/IMG_8882.jpg?ex=69d67657&is=69d524d7&hm=1b65d306b83e4038093d0d1f0cf3d05584ea9327124b90abd083e9b45332924e&=&format=webp&width=811&height=921" alt="Shadow CIA">
+  <h1>Shadow CIA - نموذج تقديم</h1>
+
+  <form>
+    <label>1. الاسم:</label>
+    <input type="text">
+
+    <label>2. العمر:</label>
+    <input type="number">
+
+    <label>3. التوقيت:</label>
+    <input type="text">
+
+    <label>4. عدد ساعات تواجدك يوميًا:</label>
+    <input type="text">
+
+    <label>5. هل لديك حسابات أخرى داخل السيرفر؟</label>
+    <textarea></textarea>
+
+    <label>6. اذكر جميع الجهات الأمنية أو العصابات التي عملت بها:</label>
+    <textarea></textarea>
+
+    <label>7. هل سبق وخنت جهة؟ وإذا نعم اذكر السبب:</label>
+    <textarea></textarea>
+
+    <label>8. هل لديك خبرة في الابتزاز / التجسس / الاختراق:</label>
+    <textarea></textarea>
+
+    <label>9. هل سبق لك تنفيذ عمليات سرية؟</label>
+    <textarea></textarea>
+
+    <label>10. ما أعلى رتبة وصلت لها؟</label>
+    <input type="text">
+
+    <label>11. هل تؤمن أن الغاية تبرر الوسيلة؟ ولماذا؟</label>
+    <textarea></textarea>
+
+    <label>12. لو كان عليك تنفيذ أمر غير قانوني لكنه يخدم الدولة، هل توافق؟</label>
+    <textarea></textarea>
+
+    <label>13. ما هو الحد الذي لا يمكنك تجاوزه مهما كانت الأوامر؟</label>
+    <textarea></textarea>
+
+    <label>14. هل تفضل الأوامر المباشرة أو العمل بحرية؟</label>
+    <textarea></textarea>
+
+    <label>15. كيف تتصرف إذا تم الضغط عليك نفسيًا؟</label>
+    <textarea></textarea>
+
+    <label>16. هل تتعهد بعدم تسريب المعلومات مهما كان الثمن؟</label>
+    <textarea></textarea>
+
+    <label>17. هل تقبل استخدام طرق غير قانونية (رشوة / تهديد) لتحقيق الهدف؟</label>
+    <textarea></textarea>
+
+    <label>18. متى يكون “الفساد” مبرر برأيك؟</label>
+    <textarea></textarea>
+
+    <label>19. هل تستطيع الكذب لحماية مهمة؟</label>
+    <textarea></textarea>
+
+    <label>20. هل تستطيع التضحية بشخص بريء لإنقاذ عملية أكبر؟</label>
+    <textarea></textarea>
+
+    <label>21. ولائك لمن؟ (القائد / النظام / نفسك) ولماذا؟</label>
+    <textarea></textarea>
+
+    <label>22. لو تعارضت الأوامر مع مصلحتك، ماذا تفعل؟</label>
+    <textarea></textarea>
+
+    <label>23. هل تقبل أن يتم التخلص منك إذا أصبحت خطرًا؟</label>
+    <textarea></textarea>
+
+    <label>24. ماذا ستفعل إذا تم اتهامك بالخيانة ظلمًا؟</label>
+    <textarea></textarea>
+
+    <label>25. هل تثق بأحد داخل الجهاز؟</label>
+    <textarea></textarea>
+
+    <label>26. تم القبض عليك، ويعرضون عليك الحرية مقابل معلومات، وش تسوي؟</label>
+    <textarea></textarea>
+
+    <label>27. عندك فرصة تسرق مبلغ كبير بدون ما أحد يدري، هل تفعل؟ ولماذا؟</label>
+    <textarea></textarea>
+
+    <label>28. قائدك طلب تصفية شخص بريء لحماية سر، وش موقفك؟</label>
+    <textarea></textarea>
+
+    <label>29. اكتشفت أن أعلى قيادة فاسدة، هل تفضحها أو تستمر؟</label>
+    <textarea></textarea>
+
+    <label>30. صديقك داخل الجهاز تورط، هل تنقذه أو تتركه؟</label>
+    <textarea></textarea>
+
+    <label>التعهد النهائي:</label>
+    <textarea></textarea>
+
+    <button type="submit">إرسال</button>
+  </form>
+</div>
+
+<script>
+let i = 0;
+let percent = document.getElementById("percent");
+let fill = document.getElementById("fill");
+
+let interval = setInterval(() => {
+  i++;
+  percent.innerText = i + "%";
+  fill.style.width = i + "%";
+
+  if (i >= 100) {
+    clearInterval(interval);
+    document.getElementById("loader").style.display = "none";
+    document.getElementById("main").style.display = "block";
+  }
+}, 20);
+</script>
+
+</body>
+</html>
