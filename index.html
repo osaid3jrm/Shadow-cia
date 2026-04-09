@@ -2,236 +2,256 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>Shadow CIA | Classified</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<title>Shadow CIA | Secure System</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
-
 body {
-  margin: 0;
-  font-family: 'Cairo', sans-serif;
-  background: #050505;
-  color: #00ff9d;
+  margin:0;
+  background:#050505;
+  color:#00ff9d;
+  font-family: monospace;
 }
 
-/* شاشة التحقق */
+/* شاشة دخول */
 #auth {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background: black;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:black;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
 }
 
-#auth input {
-  padding: 10px;
-  margin-top: 10px;
-  background: #111;
-  border: 1px solid #00ff9d;
-  color: #00ff9d;
+input, textarea {
+  width:100%;
+  padding:10px;
+  margin-top:5px;
+  background:#111;
+  border:1px solid #00ff9d40;
+  color:#00ff9d;
 }
 
-#auth button {
-  margin-top: 10px;
-  padding: 10px 20px;
-  background: #00ff9d;
-  border: none;
-  cursor: pointer;
+button {
+  margin-top:10px;
+  padding:10px;
+  background:#00ff9d;
+  border:none;
+  cursor:pointer;
 }
 
-/* شاشة تحميل */
-#loader {
-  display: none;
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background: black;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+/* اهتزاز */
+.shake {
+  animation: shake 0.3s;
 }
-
-.bar {
-  width: 300px;
-  height: 8px;
-  background: #111;
-  margin-top: 15px;
-}
-
-.fill {
-  height: 100%;
-  width: 0%;
-  background: #00ff9d;
+@keyframes shake {
+  0%{transform:translateX(0);}
+  25%{transform:translateX(-5px);}
+  50%{transform:translateX(5px);}
+  75%{transform:translateX(-5px);}
+  100%{transform:translateX(0);}
 }
 
 /* الموقع */
 .container {
-  display: none;
-  max-width: 800px;
-  margin: auto;
-  padding: 20px;
+  display:none;
+  max-width:800px;
+  margin:auto;
+  padding:20px;
 }
 
-form {
-  background: #0b0b0b;
-  padding: 20px;
-  border-radius: 15px;
+.timer {
+  text-align:center;
+  color:red;
+  font-size:20px;
+  margin-bottom:10px;
+  position:relative;
 }
 
-label {
-  margin-top: 15px;
-  display: block;
-}
-
-textarea, input {
+/* شريط نيون */
+#neonBar {
   width: 100%;
-  padding: 10px;
-  background: #111;
-  border: 1px solid #00ff9d40;
-  color: #00ff9d;
+  height: 8px;
+  background:#111;
+  border-radius:5px;
+  overflow:hidden;
+  margin-top:5px;
 }
 
-button {
-  margin-top: 20px;
-  padding: 12px;
-  width: 100%;
-  background: #00ff9d;
-  border: none;
-  cursor: pointer;
+#neonFill {
+  width: 0%;
+  height:100%;
+  background: linear-gradient(90deg, #00ff9d, #00ffff, #00ff9d);
+  animation: neonGlow 1.5s infinite alternate;
+}
+
+@keyframes neonGlow {
+  0%{filter: brightness(1);}
+  50%{filter: brightness(1.8);}
+  100%{filter: brightness(1);}
 }
 </style>
 </head>
 <body>
 
-<!-- شاشة كود -->
+<!-- دخول -->
 <div id="auth">
   <h2>ENTER ACCESS CODE</h2>
-  <input type="password" id="codeInput" placeholder="ادخل الكود">
-  <button onclick="checkCode()">دخول</button>
-</div>
-
-<!-- تحميل -->
-<div id="loader">
-  <div>ACCESSING DATABASE...</div>
-  <div class="bar"><div class="fill" id="fill"></div></div>
+  <input id="code">
+  <button onclick="login()">دخول</button>
+  <p id="tries"></p>
 </div>
 
 <!-- الموقع -->
 <div class="container" id="main">
-  <h1>Shadow CIA Application</h1>
+  <div class="timer" id="timer">Time: 10:00</div>
+  <div id="neonBar"><div id="neonFill"></div></div>
 
-  <form id="applicationForm">
+  <form id="form">
 
     <label>1. الاسم + العمر + عدد ساعات تواجدك يوميًا:</label>
-    <textarea></textarea>
+    <textarea required></textarea>
 
     <label>2. اذكر خبراتك السابقة (أمنية / عصابات / قيادية):</label>
-    <textarea></textarea>
+    <textarea required></textarea>
 
     <label>3. لماذا تريد الانضمام إلى Shadow CIA تحديدًا؟</label>
-    <textarea></textarea>
+    <textarea required></textarea>
 
     <label>4. هل تتعهد بعدم تسريب أي معلومات أو خيانة القطاع مهما كانت الظروف؟</label>
-    <textarea></textarea>
+    <textarea required></textarea>
 
     <label>5. لو طُلب منك تنفيذ أمر يخدم الدولة لكنه مخالف للقانون، هل توافق؟ ولماذا؟</label>
-    <textarea></textarea>
+    <textarea required></textarea>
 
     <label>6. تم القبض عليك وعُرضت عليك الحرية مقابل معلومات سرية، ماذا ستفعل؟</label>
-    <textarea></textarea>
+    <textarea required></textarea>
 
     <label>7. اكتشفت عضو داخل الجهاز يسرب معلومات، كيف تتصرف؟</label>
-    <textarea></textarea>
+    <textarea required></textarea>
 
     <label>8. لو تعارضت مصلحتك الشخصية مع أوامر القيادة، ماذا تختار؟ ولماذا؟</label>
-    <textarea></textarea>
+    <textarea required></textarea>
 
     <label>9. ما الذي يجعلك أفضل من غيرك للانضمام لهذا الجهاز؟</label>
-    <textarea></textarea>
+    <textarea required></textarea>
 
     <label>ايديك سوني ؟</label>
-    <input type="text">
+    <input required>
 
     <label>يوزرك دس:</label>
-    <input type="text">
+    <input required>
 
-    <button type="submit">إرسال</button>
+    <button type="button" onclick="preview()">مراجعة قبل الإرسال</button>
   </form>
 </div>
 
-<!-- صوت -->
-<audio id="hackSound" src="https://www.soundjay.com/mechanical/keyboard-1.mp3" loop></audio>
+<!-- مراجعة -->
+<div id="previewBox" style="display:none; padding:20px;">
+  <h2>تأكيد البيانات</h2>
+  <pre id="previewText"></pre>
+  <button onclick="send()">إرسال نهائي</button>
+</div>
+
+<audio id="sound" src="https://www.soundjay.com/mechanical/keyboard-1.mp3" loop></audio>
+<audio id="alertSound" src="https://www.soundjay.com/button/beep-07.mp3"></audio>
 
 <script>
-// الكود السري
-const ACCESS_CODE = "911";
+let tries = 3;
+const ACCESS = "cia";
 
-function checkCode() {
-  const input = document.getElementById("codeInput").value;
-  if (input === ACCESS_CODE) {
-    document.getElementById("auth").style.display = "none";
-    document.getElementById("loader").style.display = "flex";
-    document.getElementById("hackSound").play();
+function login(){
+  let input = document.getElementById("code").value;
 
-    let i = 0;
-    let fill = document.getElementById("fill");
-
-    let interval = setInterval(() => {
-      i += 2;
-      fill.style.width = i + "%";
-
-      if (i >= 100) {
-        clearInterval(interval);
-        document.getElementById("loader").style.display = "none";
-        document.getElementById("main").style.display = "block";
-        document.getElementById("hackSound").pause();
-      }
-    }, 30);
-
+  if(input === ACCESS){
+    document.getElementById("auth").style.display="none";
+    document.getElementById("main").style.display="block";
+    document.getElementById("sound").play();
+    startTimer();
   } else {
-    alert("ACCESS DENIED");
+    tries--;
+    document.getElementById("tries").innerText="محاولات متبقية: "+tries;
+    document.getElementById("code").classList.add("shake");
+
+    setTimeout(()=>{
+      document.getElementById("code").classList.remove("shake");
+    },300);
+
+    if(tries <= 0){
+      document.body.innerHTML="<h1 style='color:red;text-align:center'>ACCESS BLOCKED</h1>";
+    }
   }
 }
 
+// مؤقت 10 دقائق + شريط نيون
+function startTimer(){
+  let time = 600; // 10 دقائق
+  const neon = document.getElementById("neonFill");
+  let t = setInterval(()=>{
+    time--;
+    let minutes = Math.floor(time / 60);
+    let seconds = time % 60;
+    if(seconds < 10) seconds = "0"+seconds;
+    document.getElementById("timer").innerText="Time: "+minutes+":"+seconds;
+
+    let percent = ((600 - time)/600)*100;
+    neon.style.width = percent+"%";
+
+    if(time <= 0){
+      clearInterval(t);
+      document.getElementById("alertSound").play();
+      alert("انتهى الوقت!");
+      location.reload();
+    }
+  },1000);
+}
+
+// مراجعة
+function preview(){
+  const inputs = document.querySelectorAll("textarea,input");
+  let text = "";
+
+  for(let i=0;i<inputs.length;i++){
+    if(!inputs[i].value){
+      alert("لازم تعبي كل الحقول!");
+      return;
+    }
+    text += "Q"+(i+1)+": "+inputs[i].value+"\n\n";
+  }
+
+  document.getElementById("main").style.display="none";
+  document.getElementById("previewBox").style.display="block";
+  document.getElementById("previewText").innerText=text;
+}
+
 // إرسال Embed
-const form = document.getElementById('applicationForm');
-const webhookURL = "https://discord.com/api/webhooks/1491730127027961878/StqAvvN1iG4qr-rO0OVo_rj44LG3rRdVCg86mlPEBjj3AQFUIW6KsL1AaDJ-uMaiPr6Y";
+async function send(){
+  const webhook = "https://discord.com/api/webhooks/1491730127027961878/StqAvvN1iG4qr-rO0OVo_rj44LG3rRdVCg86mlPEBjj3AQFUIW6KsL1AaDJ-uMaiPr6Y";
+  const inputs = document.querySelectorAll("textarea,input");
 
-form.addEventListener('submit', async (e) => {
-  e.preventDefault();
-
-  const inputs = form.querySelectorAll('textarea,input');
-
-  const embed = {
+  let embed = {
     title: " Shadow CIA Application",
     color: 0x00ff9d,
-    fields: []
+    fields:[]
   };
 
-  inputs.forEach((el, i) => {
+  inputs.forEach((el,i)=>{
     embed.fields.push({
-      name: `Q${i+1}`,
-      value: el.value || "-",
-      inline: false
+      name:"Q"+(i+1),
+      value: el.value,
+      inline:false
     });
   });
 
-  await fetch(webhookURL, {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({
-      embeds: [embed]
-    })
+  await fetch(webhook,{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({embeds:[embed]})
   });
 
-  alert("تم إرسال التقديم ");
-  form.reset();
-});
+  alert("تم الإرسال بنجاح ");
+  location.reload();
+}
 </script>
-
 </body>
 </html>
