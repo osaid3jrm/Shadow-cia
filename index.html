@@ -6,23 +6,43 @@
 <style>
 body {
   margin:0;
-  background:#050505;
-  color:#00ff9d;
+  overflow:hidden;
+  background:black;
   font-family: monospace;
+  color:#00ff9d;
 }
 
-/* شاشة دخول */
-#auth {
+/* Canvas Matrix */
+#matrixCanvas {
   position:fixed;
+  top:0;
+  left:0;
   width:100%;
   height:100%;
-  background:black;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  flex-direction:column;
+  z-index:-1;
 }
 
+/* الموقع */
+.container {
+  max-width:800px;
+  margin:auto;
+  padding:20px;
+  position:relative;
+  z-index:10;
+}
+
+/* نافذة typing hack */
+#hackScreen {
+  background: rgba(0,0,0,0.8);
+  border:1px solid #00ff9d;
+  padding:10px;
+  height:150px;
+  overflow-y:auto;
+  font-size:14px;
+  margin-bottom:10px;
+}
+
+/* Inputs */
 input, textarea {
   width:100%;
   padding:10px;
@@ -40,32 +60,11 @@ button {
   cursor:pointer;
 }
 
-/* اهتزاز */
-.shake {
-  animation: shake 0.3s;
-}
-@keyframes shake {
-  0%{transform:translateX(0);}
-  25%{transform:translateX(-5px);}
-  50%{transform:translateX(5px);}
-  75%{transform:translateX(-5px);}
-  100%{transform:translateX(0);}
-}
-
-/* الموقع */
-.container {
-  display:none;
-  max-width:800px;
-  margin:auto;
-  padding:20px;
-}
-
 .timer {
   text-align:center;
   color:red;
   font-size:20px;
   margin-bottom:10px;
-  position:relative;
 }
 
 /* شريط نيون */
@@ -94,98 +93,87 @@ button {
 </head>
 <body>
 
-<!-- دخول -->
-<div id="auth">
-  <h2>ENTER ACCESS CODE</h2>
-  <input id="code">
-  <button onclick="login()">دخول</button>
-  <p id="tries"></p>
-</div>
+<canvas id="matrixCanvas"></canvas>
 
-<!-- الموقع -->
 <div class="container" id="main">
+  <div id="hackScreen"></div>
   <div class="timer" id="timer">Time: 10:00</div>
   <div id="neonBar"><div id="neonFill"></div></div>
 
   <form id="form">
-
-    <label>1. الاسم + العمر + عدد ساعات تواجدك يوميًا:</label>
-    <textarea required></textarea>
-
-    <label>2. اذكر خبراتك السابقة (أمنية / عصابات / قيادية):</label>
-    <textarea required></textarea>
-
-    <label>3. لماذا تريد الانضمام إلى Shadow CIA تحديدًا؟</label>
-    <textarea required></textarea>
-
-    <label>4. هل تتعهد بعدم تسريب أي معلومات أو خيانة القطاع مهما كانت الظروف؟</label>
-    <textarea required></textarea>
-
-    <label>5. لو طُلب منك تنفيذ أمر يخدم الدولة لكنه مخالف للقانون، هل توافق؟ ولماذا؟</label>
-    <textarea required></textarea>
-
-    <label>6. تم القبض عليك وعُرضت عليك الحرية مقابل معلومات سرية، ماذا ستفعل؟</label>
-    <textarea required></textarea>
-
-    <label>7. اكتشفت عضو داخل الجهاز يسرب معلومات، كيف تتصرف؟</label>
-    <textarea required></textarea>
-
-    <label>8. لو تعارضت مصلحتك الشخصية مع أوامر القيادة، ماذا تختار؟ ولماذا؟</label>
-    <textarea required></textarea>
-
-    <label>9. ما الذي يجعلك أفضل من غيرك للانضمام لهذا الجهاز؟</label>
-    <textarea required></textarea>
-
-    <label>ايديك سوني ؟</label>
-    <input required>
-
-    <label>يوزرك دس:</label>
-    <input required>
-
+    <label>1. الاسم + العمر + عدد ساعات تواجدك يوميًا:</label><textarea required></textarea>
+    <label>2. اذكر خبراتك السابقة (أمنية / عصابات / قيادية):</label><textarea required></textarea>
+    <label>3. لماذا تريد الانضمام إلى Shadow CIA تحديدًا؟</label><textarea required></textarea>
+    <label>4. هل تتعهد بعدم تسريب أي معلومات أو خيانة القطاع مهما كانت الظروف؟</label><textarea required></textarea>
+    <label>5. لو طُلب منك تنفيذ أمر يخدم الدولة لكنه مخالف للقانون، هل توافق؟ ولماذا؟</label><textarea required></textarea>
+    <label>6. تم القبض عليك وعُرضت عليك الحرية مقابل معلومات سرية، ماذا ستفعل؟</label><textarea required></textarea>
+    <label>7. اكتشفت عضو داخل الجهاز يسرب معلومات، كيف تتصرف؟</label><textarea required></textarea>
+    <label>8. لو تعارضت مصلحتك الشخصية مع أوامر القيادة، ماذا تختار؟ ولماذا؟</label><textarea required></textarea>
+    <label>9. ما الذي يجعلك أفضل من غيرك للانضمام لهذا الجهاز؟</label><textarea required></textarea>
+    <label>ايديك سوني ؟</label><input required>
+    <label>يوزرك دس:</label><input required>
     <button type="button" onclick="preview()">مراجعة قبل الإرسال</button>
   </form>
 </div>
 
-<!-- مراجعة -->
 <div id="previewBox" style="display:none; padding:20px;">
   <h2>تأكيد البيانات</h2>
   <pre id="previewText"></pre>
   <button onclick="send()">إرسال نهائي</button>
 </div>
 
-<audio id="sound" src="https://www.soundjay.com/mechanical/keyboard-1.mp3" loop></audio>
-<audio id="alertSound" src="https://www.soundjay.com/button/beep-07.mp3"></audio>
+<audio id="typingSound" src="https://www.soundjay.com/button/beep-07.mp3"></audio>
+<audio id="hackingSound" src="https://www.soundjay.com/mechanical/keyboard-1.mp3" loop></audio>
 
 <script>
-let tries = 3;
-const ACCESS = "cia";
+// Matrix Background
+const canvas = document.getElementById("matrixCanvas");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-function login(){
-  let input = document.getElementById("code").value;
+const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890@#$%^&*()*&^%";
+const fontSize = 16;
+const columns = canvas.width / fontSize;
+const drops = [];
+for(let x=0; x<columns; x++) drops[x]=1;
 
-  if(input === ACCESS){
-    document.getElementById("auth").style.display="none";
-    document.getElementById("main").style.display="block";
-    document.getElementById("sound").play();
-    startTimer();
-  } else {
-    tries--;
-    document.getElementById("tries").innerText="محاولات متبقية: "+tries;
-    document.getElementById("code").classList.add("shake");
-
-    setTimeout(()=>{
-      document.getElementById("code").classList.remove("shake");
-    },300);
-
-    if(tries <= 0){
-      document.body.innerHTML="<h1 style='color:red;text-align:center'>ACCESS BLOCKED</h1>";
-    }
+function drawMatrix(){
+  ctx.fillStyle = "rgba(0,0,0,0.05)";
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle = "#00ff9d";
+  ctx.font = fontSize + "px monospace";
+  for(let i=0;i<drops.length;i++){
+    const text = letters.charAt(Math.floor(Math.random()*letters.length));
+    ctx.fillText(text, i*fontSize, drops[i]*fontSize);
+    if(drops[i]*fontSize > canvas.height && Math.random() > 0.975) drops[i]=0;
+    drops[i]++;
   }
 }
+setInterval(drawMatrix,33);
 
-// مؤقت 10 دقائق + شريط نيون
+// Hacking Typing Effect + beep
+const hackScreen = document.getElementById("hackScreen");
+const typingSound = document.getElementById("typingSound");
+const hackingSound = document.getElementById("hackingSound");
+hackingSound.play();
+
+function hackTyping(){
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890@#$%^&*()*&^%";
+  let line = "";
+  for(let i=0;i<Math.floor(Math.random()*50+20);i++){
+    line += chars.charAt(Math.floor(Math.random()*chars.length));
+  }
+  hackScreen.innerText += line + "\n";
+  hackScreen.scrollTop = hackScreen.scrollHeight;
+  typingSound.currentTime=0;
+  typingSound.play();
+}
+setInterval(hackTyping, 500);
+
+// عداد 10 دقائق + شريط نيون
 function startTimer(){
-  let time = 600; // 10 دقائق
+  let time = 600;
   const neon = document.getElementById("neonFill");
   let t = setInterval(()=>{
     time--;
@@ -193,24 +181,22 @@ function startTimer(){
     let seconds = time % 60;
     if(seconds < 10) seconds = "0"+seconds;
     document.getElementById("timer").innerText="Time: "+minutes+":"+seconds;
-
     let percent = ((600 - time)/600)*100;
     neon.style.width = percent+"%";
-
     if(time <= 0){
       clearInterval(t);
-      document.getElementById("alertSound").play();
+      hackingSound.pause();
       alert("انتهى الوقت!");
       location.reload();
     }
   },1000);
 }
+startTimer();
 
 // مراجعة
 function preview(){
   const inputs = document.querySelectorAll("textarea,input");
   let text = "";
-
   for(let i=0;i<inputs.length;i++){
     if(!inputs[i].value){
       alert("لازم تعبي كل الحقول!");
@@ -218,7 +204,6 @@ function preview(){
     }
     text += "Q"+(i+1)+": "+inputs[i].value+"\n\n";
   }
-
   document.getElementById("main").style.display="none";
   document.getElementById("previewBox").style.display="block";
   document.getElementById("previewText").innerText=text;
@@ -228,27 +213,9 @@ function preview(){
 async function send(){
   const webhook = "https://discord.com/api/webhooks/1491730127027961878/StqAvvN1iG4qr-rO0OVo_rj44LG3rRdVCg86mlPEBjj3AQFUIW6KsL1AaDJ-uMaiPr6Y";
   const inputs = document.querySelectorAll("textarea,input");
-
-  let embed = {
-    title: " Shadow CIA Application",
-    color: 0x00ff9d,
-    fields:[]
-  };
-
-  inputs.forEach((el,i)=>{
-    embed.fields.push({
-      name:"Q"+(i+1),
-      value: el.value,
-      inline:false
-    });
-  });
-
-  await fetch(webhook,{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body: JSON.stringify({embeds:[embed]})
-  });
-
+  let embed = {title:"🕶️ Shadow CIA Application",color:0x00ff9d,fields:[]};
+  inputs.forEach((el,i)=>embed.fields.push({name:"Q"+(i+1),value:el.value,inline:false}));
+  await fetch(webhook,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({embeds:[embed]})});
   alert("تم الإرسال بنجاح ");
   location.reload();
 }
